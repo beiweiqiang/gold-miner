@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using GlobalConfig;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,9 +13,6 @@ public class GameManager : MonoBehaviour
   static GameManager instance;
 
   private int _score;
-  private float _endPointX = 3.8f;
-  private float _endPointY = 6f;
-  private float _startCount = 10;
 
   static public GameManager getInstance()
   {
@@ -34,7 +32,7 @@ public class GameManager : MonoBehaviour
   {
     _score = 0;
 
-    for (int i = 0; i < _startCount; i++)
+    for (int i = 0; i < GAME_MANAGER.INIT_COUNT; i++)
     {
       SpawNewFruit();
     }

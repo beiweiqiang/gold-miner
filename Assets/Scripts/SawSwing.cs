@@ -8,12 +8,6 @@ public class SawSwing : MonoBehaviour
   public GameObject pointObject;
   public GameObject sawObject;
 
-  // static private float _angleOffset = 0.05f;
-  static private float _startAngle = Mathf.PI / 2 - SAW_SWING.ANGLE_OFFSET * Mathf.PI;
-  static private float _endAngle = Mathf.PI / 2 * 3 + SAW_SWING.ANGLE_OFFSET * Mathf.PI;
-  static private float _endPointX = 7.8f;
-  static private float _endPointY = 5f;
-
   private float _distance;
   private Vector2 _center;
   private float _angle;
@@ -30,7 +24,7 @@ public class SawSwing : MonoBehaviour
 
   void Start()
   {
-    _angle = _startAngle;
+    _angle = SAW_SWING.START_ANGLE;
     _center = pointObject.transform.position;
     _distance = Vector3.Distance(pointObject.transform.position, sawObject.transform.position);
   }
@@ -60,18 +54,8 @@ public class SawSwing : MonoBehaviour
 
   private void OnTriggerEnter2D(Collider2D other) {
     if (other && other.CompareTag("Fruit")) {
-
       Fruit fruit = other.gameObject.GetComponent<Fruit>();
 
-      // GameManager.getInstance().AddScore(fruit.getScore());
-      
-      // // 随机生成新的水果
-      // GameManager.getInstance().SpawNewFruit();
-
-      // if (other.gameObject != null) {
-      //   Destroy(other.gameObject, 0.1f);
-      // }
-      
       // 往回拉
       _elongation = false;
 
@@ -97,10 +81,10 @@ public class SawSwing : MonoBehaviour
     float x = transform.position.x;
     float y = transform.position.y;
     if (
-      _elongation && (y >= _endPointY ||
-      y <= -_endPointY ||
-      x >= _endPointX ||
-      x <= -_endPointX)) {
+      _elongation && (y >= SAW_SWING.END_POINT_Y ||
+      y <= -SAW_SWING.END_POINT_Y ||
+      x >= SAW_SWING.END_POINT_X ||
+      x <= -SAW_SWING.END_POINT_X)) {
         _elongation = false;
     }
     if (Vector3.Distance(pointObject.transform.position, sawObject.transform.position) <= _distance) {
@@ -123,10 +107,10 @@ public class SawSwing : MonoBehaviour
 
   // 摆动动作
   void SwingSaw() {
-    if (_direction && _angle >= _endAngle) {
+    if (_direction && _angle >= SAW_SWING.END_ANGLE) {
       _direction = false;
     }
-    if (!_direction && _angle <= _startAngle) {
+    if (!_direction && _angle <= SAW_SWING.START_ANGLE) {
       _direction = true;
     }
 
