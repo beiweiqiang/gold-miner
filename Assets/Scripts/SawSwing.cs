@@ -19,6 +19,7 @@ public class SawSwing : MonoBehaviour
   private bool _stretching = false;
   // 是否在伸长, true: 伸长, false: 缩短
   private bool _elongation = true;
+  private float _stretchSpeed = SAW_SWING.STRETCH_SPEED;
 
   private Fruit _catchingFruit;
 
@@ -47,6 +48,7 @@ public class SawSwing : MonoBehaviour
     }
 
     if (!_stretching && _catchingFruit != null) {
+      ResetStretchSpeed();
       _catchingFruit.destroyAndSpawNew();
       _catchingFruit = null;
     }
@@ -61,30 +63,40 @@ public class SawSwing : MonoBehaviour
 
       _catchingFruit = fruit;
 
-      SlowdownStretchSpeed(fruit.getScore());
+      SlowdownStretchSpeed(fruit.getWeight());
     }
   }
 
-  void SlowdownStretchSpeed(int score) {
-    
+  // 按一定规则减缓伸缩速度
+  void SlowdownStretchSpeed(int weight) {
+    _stretchSpeed *= 1f / ((float)weight + 1f);
+  }
+
+  // 恢复伸缩速度
+  void ResetStretchSpeed() {
+    _stretchSpeed = SAW_SWING.STRETCH_SPEED;
   }
 
   // 伸缩动作
   void Stretching() {
     if (_elongation) {
-      offset += new Vector2(Mathf.Sin(_angle), Mathf.Cos(_angle)) * SAW_SWING.STRETCH_SPEED;
+      offset += new Vector2(Mathf.Sin(_angle), Mathf.Cos(_angle)) * _stretchSpeed;
     } else {
-      offset -= new Vector2(Mathf.Sin(_angle), Mathf.Cos(_angle)) * SAW_SWING.STRETCH_SPEED;
+      offset -= new Vector2(Mathf.Sin(_angle), Mathf.Cos(_angle)) * _stretchSpeed;
     }
     transform.position = _center + offset;
 
     float x = transform.position.x;
     float y = transform.position.y;
+    
+    // 边界测定
     if (
-      _elongation && (y >= SAW_SWING.END_POINT_Y ||
-      y <= -SAW_SWING.END_POINT_Y ||
-      x >= SAW_SWING.END_POINT_X ||
-      x <= -SAW_SWING.END_POINT_X)) {
+      _elongation && (
+        y >= SCENCE.BOUNDARY_END_Y ||
+        y <= SCENCE.BOUNDARY_START_Y ||
+        x >= SCENCE.BOUNDARY_END_X ||
+        x <= SCENCE.BOUNDARY_START_X
+      )) {
         _elongation = false;
     }
     if (Vector3.Distance(pointObject.transform.position, sawObject.transform.position) <= _distance) {

@@ -6,11 +6,13 @@ public class Fruit : MonoBehaviour
 {
   private int score;
   private CircleCollider2D cc;
+  private int _weight;
 
   void Start()
   {
     cc = GetComponent<CircleCollider2D>();
     score = Random.Range(1, 10);
+    _weight = score;
     float bigger = (float) score / 10f;
     transform.localScale += new Vector3(bigger, bigger, 0);
     cc.radius *= bigger;
@@ -18,6 +20,10 @@ public class Fruit : MonoBehaviour
 
   public int getScore() {
     return score;
+  }
+
+  public int getWeight() {
+    return _weight;
   }
 
   // Update is called once per frame
