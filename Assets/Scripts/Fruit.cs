@@ -18,7 +18,7 @@ public class Fruit : MonoBehaviour
     cc.radius *= bigger;
   }
 
-  public int getScore() {
+  public virtual int getScore() {
     return score;
   }
 
@@ -39,7 +39,7 @@ public class Fruit : MonoBehaviour
   public void destroyAndSpawNew() {
     cc.enabled = false;
     Destroy(gameObject, 0.1f);
-    GameManager.getInstance().AddScore(score);
+    GameManager.getInstance().AddScore(getScore());
     GameManager.getInstance().SpawNewFruit();
   }
 

@@ -477,6 +477,7 @@ MonoBehaviour:
   fruits:
   - {fileID: 7040263733458452660, guid: dfde84cfbcb4d41d98c3d858342d0ef2, type: 3}
   - {fileID: 3419952427684426506, guid: b4bfbd0a7d3f24ef9803e14e1c8ee3bb, type: 3}
+  - {fileID: 6617480559472499257, guid: a6ce5881e30134777aa8087dd3551d8c, type: 3}
 --- !u!4 &565108010
 Transform:
   m_ObjectHideFlags: 0
